@@ -132,3 +132,15 @@ patterns, or found something that needed fixing — submit a PR or open an issue
 
 Rochester Hills Public Library — Rochester Hills, Michigan
 [rhpl.org](https://rhpl.org)
+
+## Security guidance for contributors (AI tools)
+
+This is a public repository. If you use AI coding tools (Claude Code, Antigravity, Cursor, Copilot, ChatGPT, Gemini, etc.) to work on this code, treat the AI's context window as **non-confidential**. Anything you paste into a prompt may be logged, used for model training, or visible to the service provider's staff.
+
+**Do not paste secrets, private patron data, or full internal network diagrams into AI prompts; treat the AI context as non-confidential.** Specifically avoid:
+
+- Library patron data (names, card numbers, contact info, borrowing history)
+- Vendor account credentials, OAuth secrets, or any internal admin URLs
+- Full internal network diagrams or your library's IP allocation tables
+
+This repo is frontend HTML/CSS/JS only — there's no secret data it should ever need. AGENTS.md in this repo instructs AI agents to decline if asked to consume real data and to remind you of this rule.
