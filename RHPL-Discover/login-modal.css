@@ -1,0 +1,127 @@
+/* ============================================================================
+   RHPL Vega Discover — Branded Login Modal
+   ----------------------------------------------------------------------------
+   In mid-2026 Clarivate replaced the Vega Discover login UI with a bare,
+   centered modal that carried none of a library's branding — to patrons it
+   looked like a third-party popup. This is the CSS RHPL uses to make that
+   modal feel like part of the library site again.
+
+   HOW TO USE: paste this into your Vega **Custom Header** code. It is scoped to
+   the login modal's `[data-automation-id="sign-in-panel"]` so it cannot affect
+   any other Vega dialog (Place Hold, Fines, errors, the logged-in account
+   panel, etc.). Replace the RHPL logo URL and brand color with your own.
+
+   VEGA GOTCHAS we learned the hard way (all relevant if you adapt this):
+     1. The Custom Header/Footer fields TRUNCATE at a length cap. If your header
+        is large, code appended at the very end can be silently cut off. Keep
+        additions lean (the production Header.html uses a minified copy of this).
+     2. Inline JavaScript in the Footer: only the FIRST inline <script> reliably
+        runs; a second/later one (or one after a long first script) gets dropped.
+     3. CSS `content: url(data:...)` (data-URI backgrounds) is NOT loaded.
+        Hosted https image URLs (like the logo) work fine.
+     4. CSS `content: "text"` DOES render (e.g. the help line below) — same
+        technique Vega itself uses for nav chevrons.
+     5. Label/string changes (e.g. "Passcode" -> "PIN / Password", the forgot
+        link text) are best done in Vega **Managed Translations**, not CSS/JS —
+        keys: loginFormPasscode, loginIForgotMyPasscode, etc.
+   ============================================================================ */
+
+:root { --rhpl-brand: #006980; }
+
+/* The white modal box is DIV.user-tools (position:fixed) wrapping APP-INSPIRE-SIGN-IN;
+   both render ~full width. Cap to a tidy centered card. :has() keeps this scoped to the
+   login view only, so the logged-in account panel (same .user-tools class) is untouched. */
+.user-tools:has([data-automation-id="sign-in-panel"]) {
+  max-width: 480px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+.user-tools:has([data-automation-id="sign-in-panel"]) app-inspire-sign-in {
+  display: block;
+  max-width: 480px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+[data-automation-id="sign-in-panel"] {
+  max-width: 480px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Hide the stock "Log In" heading text but keep its ::before, which we use to draw the
+   RHPL logo (hosted PNG on the white panel). */
+[data-automation-id="sign-in-panel"] [data-automation-id="login-title"] {
+  text-align: center;
+  color: var(--rhpl-brand);
+  font-weight: 700;
+  width: 100%;
+  font-size: 0;
+  line-height: 0;
+}
+[data-automation-id="sign-in-panel"] [data-automation-id="login-title"]::before {
+  content: "";
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: 46px;
+  margin: 0 auto 20px;
+  background: url("https://static.wixstatic.com/media/91b1f6_fb0a12357bf94dd89761ee90cc7eaff3~mv2.png") center / contain no-repeat;
+}
+
+/* Center & widen the form block. */
+[data-automation-id="sign-in-panel"] .login-form-container {
+  width: 100%;
+  max-width: 414px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Recolor the primary Log In button to brand teal (overrides Vega's slate ".flint"). */
+[data-automation-id="sign-in-panel"] [data-automation-id="login-button"] {
+  background-color: var(--rhpl-brand) !important;
+  border-color: var(--rhpl-brand) !important;
+  font-size: 1.05rem;
+}
+[data-automation-id="sign-in-panel"] [data-automation-id="login-button"]:hover,
+[data-automation-id="sign-in-panel"] [data-automation-id="login-button"]:focus {
+  background-color: #00566a !important;
+  border-color: #00566a !important;
+}
+
+/* Forgot-PIN link + field labels on brand. */
+[data-automation-id="sign-in-panel"] [data-automation-id="login-forgot-my-passcode-link"] {
+  color: var(--rhpl-brand);
+  font-weight: 600;
+  font-size: 1rem;
+}
+[data-automation-id="sign-in-panel"] .login-form-label {
+  font-size: 1.05rem;
+  color: var(--rhpl-brand);
+  font-weight: 600;
+}
+[data-automation-id="sign-in-panel"] .login-form-control { font-size: 1.05rem; height: 44px; }
+
+/* Hide Vega's vague barcode (i) tooltip button. */
+[data-automation-id="sign-in-panel"] [data-automation-id="login-form-barcode-label-button"] {
+  display: none !important;
+}
+
+/* RHPL "need help" line at the bottom of the form, drawn with CSS content: text
+   (see gotcha #4). Not a clickable link — Vega's footer JS that would inject a real
+   anchor gets truncated/dropped (gotchas #1-2), so this is plain bold-teal text. */
+[data-automation-id="sign-in-panel"] .login-form-container::after {
+  content: "Need help logging in?  Call (248) 650-7160";
+  display: block;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #d4e6e9;
+  text-align: center;
+  color: var(--rhpl-brand);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
