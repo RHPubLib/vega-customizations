@@ -5,6 +5,13 @@ of Things catalog featuring tools, electronics, musical instruments, art supplie
 experience passes, and more. The IIC runs as both a full patron-facing web catalog
 and a stripped-down in-library kiosk.
 
+> **Branded login modal:** the IIC catalog uses the same RHPL-branded Vega login modal as
+> Discover — see [`../RHPL-Discover/login-modal.css`](../RHPL-Discover/login-modal.css) and the
+> "Branded Login Modal" section + Vega gotchas in the
+> [Discover README](../RHPL-Discover/README.md). The block is appended at the bottom of
+> `Header.html`; the "PIN / Password" wording comes from Managed Translations (shared with
+> Discover's Vega instance).
+
 **Two experiences, one catalog:**
 
 | Experience | URL | Description |

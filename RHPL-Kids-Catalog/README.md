@@ -10,6 +10,14 @@ materials — not how adults search for them. It serves children from pre-reader
 teenagers, running as both a public web catalog accessible from home and a series of
 in-library touch kiosks deployed throughout the building.
 
+> **Branded login modal:** the Kids catalog uses the same RHPL-branded Vega login modal as
+> Discover — see [`../RHPL-Discover/login-modal.css`](../RHPL-Discover/login-modal.css) and the
+> "Branded Login Modal" section + Vega gotchas in the
+> [Discover README](../RHPL-Discover/README.md). The block is appended at the bottom of
+> `Header.html`. Note Kids is a **separate Vega instance**, so the "PIN / Password" wording is
+> set in the Kids Managed Translations (its own `loginFormPasscode` / `loginIForgotMyPasscode`
+> keys), not shared with Discover.
+
 Where the main library catalog expects users to search by title, author, or subject
 heading, the Kids Catalog meets children where they are: visual subject browsing through
 images of dinosaurs, princesses, and planes for younger readers; series and character
